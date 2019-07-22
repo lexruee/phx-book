@@ -1,6 +1,3 @@
 <h1>User details</h1>
-<ul>
-    <li>Firstname: <%= first_name(@user) %></li>
-    <li>Lastname: <%= last_name(@user) %></li>
-    <li>Username: <%= @user.username %></li>
-</ul>
+<%= render("user.html", user: @user) %>
+

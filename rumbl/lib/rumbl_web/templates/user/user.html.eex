@@ -1,0 +1,5 @@
+<ul>
+    <li>Firstname: <%= first_name(@user) %></li>
+    <li>Lastname: <%= last_name(@user) %></li>
+    <li>Username: <%= @user.username %></li>
+</ul>
