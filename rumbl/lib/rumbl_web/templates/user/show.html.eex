@@ -1,5 +1,6 @@
 <h1>User details</h1>
 <ul>
-    <li>Name: <%= @user.name %></li>
+    <li>Firstname: <%= first_name(@user) %></li>
+    <li>Lastname: <%= last_name(@user) %></li>
     <li>Username: <%= @user.username %></li>
 </ul>
