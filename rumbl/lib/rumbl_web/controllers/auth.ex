@@ -1,4 +1,8 @@
 defmodule RumblWeb.Auth do
+  alias RumblWeb.Router.Helpers, as: Routes
+  alias Rumbl.Accounts.User
+
+  import Phoenix.Controller, only: [put_flash: 3, redirect: 2]
   import Plug.Conn
 
   def init(opts), do: opts
@@ -19,5 +23,19 @@ defmodule RumblWeb.Auth do
   def logout(conn) do
     conn
     |> configure_session(drop: true)
+  end
+
+  def authenticate_user(conn, _opts) do
+    case conn.assigns.current_user do
+      %User{} -> conn
+      _ -> user_authentication_error(conn)
+    end
+  end
+
+  defp user_authentication_error(conn) do
+    conn
+    |> put_flash(:error, "You must be logged in to access that page!")
+    |> redirect(to: Routes.page_path(conn, :index))
+    |> halt()
   end
 end
