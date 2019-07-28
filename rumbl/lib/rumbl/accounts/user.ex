@@ -5,6 +5,7 @@ defmodule Rumbl.Accounts.User do
   schema "users" do
     field :name, :string
     field :username, :string
+    field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true
 
@@ -14,7 +15,7 @@ defmodule Rumbl.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :username])
-    |> validate_required([:name, :username])
+    |> validate_required([:name, :username, :email])
     |> validate_length(:username, min: 1, max: 20)
     |> unique_constraint(:username)
   end
