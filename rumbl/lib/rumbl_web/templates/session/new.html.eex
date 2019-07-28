@@ -6,7 +6,7 @@
     <%= text_input f, :username, placeholder: "Username" %>
     </div>
     <div>
-    <%= text_input f, :password, placeholder: "Password" %>
+    <%= password_input f, :password, placeholder: "Password" %>
     </div>
     <%= submit "Login" %>
 <% end %>
