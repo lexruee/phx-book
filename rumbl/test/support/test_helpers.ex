@@ -10,7 +10,8 @@ defmodule Rumbl.TestHelpers do
     {:ok, user} = Enum.into(attrs, %{
       name: "Some User",
       username: "user#{System.unique_integer([:positive])}",
-      password: attrs[:password] || "supersecret"
+      password: attrs[:password] || "supersecret",
+      email: attrs[:email] || "someuser@example.com",
     }) |> Accounts.register_user()
 
     user
