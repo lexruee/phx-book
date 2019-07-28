@@ -14,7 +14,7 @@ defmodule Rumbl.Accounts.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :username])
+    |> cast(attrs, [:name, :username, :email])
     |> validate_required([:name, :username, :email])
     |> validate_length(:username, min: 1, max: 20)
     |> unique_constraint(:username)
