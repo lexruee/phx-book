@@ -1,5 +1,6 @@
 defmodule RumblWeb.VideoControllerTest do
   use RumblWeb.ConnCase, async: true
+  alias Rumbl.Multimedia
 
   describe "with a logged-in user" do
     setup %{conn: conn, login_as: username} do
@@ -20,7 +21,30 @@ defmodule RumblWeb.VideoControllerTest do
       assert String.contains?(conn.resp_body, user_video.title)
       refute String.contains?(conn.resp_body, other_video.title)
     end
+
+    @create_attrs %{
+      url: "http://youtu.be",
+      title: "vid",
+      description: "a vid"}
+
+    @invalid_attrs %{title: "invalid"}
+
+    defp video_count, do: Enum.count(Multimedia.list_videos())
+
+    @tag login_as: "max"
+    test "creates a user video and redirects", %{conn: conn, user: user} do
+      create_conn = post conn, Routes.video_path(conn, :create), video: @create_attrs
+
+      assert %{id: id} = redirected_params(create_conn)
+      assert redirected_to(create_conn) == Routes.video_path(create_conn, :show, id)
+
+      conn = get(conn, Routes.video_path(conn, :show, id))
+      assert html_response(conn, 200) =~ "Show Video"
+
+      assert Multimedia.get_video!(id).user_id == user.id
+    end
   end
+
 
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
