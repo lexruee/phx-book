@@ -14,7 +14,7 @@ defmodule Rumbl.Accounts do
     Repo.get(User, id)
   end
 
-  def get_user(id) do
+  def get_user!(id) do
     Repo.get!(User, id)
   end
 
